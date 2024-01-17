@@ -21,11 +21,11 @@ class BST:
         if root.right != None:
             print('R',root.right.data,end='')
         print()
-        printTreeHelper(root.left)
-        printTreeHelper(root.right)
+        self.printTreeHelper(root.left)
+        self.printTreeHelper(root.right)
 
     def printTree(self):
-        printTreeHelper(self.root)
+        self.printTreeHelper(self.root)
 
     def isdatapresentHelper(self,root,data):
         #if the tree is None simply return Fals
@@ -36,17 +36,35 @@ class BST:
                 return True
             if root.data > data:
                 #call on left
-                return isdatapresentHelper(root.left,data)
+                return self.isdatapresentHelper(root.left,data)
             else:
                 #call on right
-                return isdatapresentHelper(root.right,data)
+                return self.isdatapresentHelper(root.right,data)
         
         #THIS IS for searching the data
     def isdatapresent(self,data):
-        return isdatapresentHelper(self.root,data)
+        return self.isdatapresentHelper(self.root,data)
+
+
+    def insertHelper(self,root,data):
+        #it is an empty tree
+        if root == None:
+            #call it a binary tree and return node and create a node with data and return this node
+            node = BinaryTreeNode(data)
+            return node
+
+        #if roots data is greater than roots data then call it on left and attach it to roots left 
+        if root.data > data:
+            root.left = self.insertHelper(root.left, data)
+            return root
+        else:
+            root.right = self.insertHelper(root.right, data)
+            return root
+            
 
     def insert(self,data):
-        return
+        #if it returns you the new root,then change your class root to this
+        self.insertHelper(self.root, data)
     def deletedata(self,data):
         return False
     def count(self):
