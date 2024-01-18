@@ -7,7 +7,7 @@ class BinaryTreeNode:
         self.left = None
         self.right = None
 class BST:
-    def __init__(self,data=None):
+    def __init__(self,data):
         #initially keeping root as None,and no of nodes also zero
         self.root = None
         self.numofnodes = 0
@@ -134,14 +134,14 @@ class BST:
         return self.numofnodes
 
 b =BST()
-print(b.insert(10)) #->the 1st one will be root
-print(b.insert(5))  #->2nd one will be roots left
-print(b.insert(12))  # ->3rd one will be roots right
-print(b.insert(11))
-print(b.insert(15))
-print(b.printTree())
+b.insert(10) #->the 1st one will be root
+b.insert(5)  #->2nd one will be roots left
+b.insert(12)  # ->3rd one will be roots right
+b.insert(11)
+b.insert(15)
+b.printTree()
 print(b.count())
-print(b.deletedata(8))
-print(b.printTree())
-print(b.deletedata(5))
-print(b.printTree())
+b.deletedata(8)
+b.printTree()
+b.deletedata(5)
+b.printTree()
