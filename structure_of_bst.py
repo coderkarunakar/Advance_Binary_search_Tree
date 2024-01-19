@@ -1,6 +1,7 @@
 
 #write code without looking and understand it
 #Structure of BST
+#it is used to create node and link them to construct binary tree for various application,it has data the information stored in the node,and pointers to the left and right children forming heirarchiical structure of the binary tree
 class BinaryTreeNode:
     def __init__(self,data):
         self.data = data
@@ -11,6 +12,7 @@ class BST:
         #initially keeping root as None,and no of nodes also zero
         self.root = None
         self.numofnodes = 0
+        #just because of code readability and To make it user friendly we are using an helper function
     def printTreeHelper(self,root):
         
         #note:if you want to call recursively on left and right side then you need to pass root as your argument
@@ -29,15 +31,16 @@ class BST:
     def printTree(self):
         self.printTreeHelper(self.root)
 
+#just returns true or false,
     def isdatapresentHelper(self,root,data):
         #if the tree is None simply return Fals
             if root ==  None:
                 return False
-                #if the searching data is equal to the root data then it is true
+                #if the searching data is equal to the root data then it is true,checks at every root value
             if root.data == data:
                 return True
             if root.data > data:
-                #call on left
+                #call on left,and checks at every node by using above lines
                 return self.isdatapresentHelper(root.left,data)
             else:
                 #call on right
@@ -47,9 +50,10 @@ class BST:
     def isdatapresent(self,data):
         return self.isdatapresentHelper(self.root,data)
 
-
-    def insertHelper(self,root,data):
-        #it is an empty tree
+#Note:the root remains same untill completion of the tree
+    def insertHelper(self,root,data): 
+        #for an empty tree we are creating an new node and returning it ,in order to insert new nodes
+        #it is an empty tree, the first one will be root created
         if root == None:
             #call it a binary tree and return node and create a node with data and return this node
             node = BinaryTreeNode(data)
@@ -63,8 +67,8 @@ class BST:
             root.right = self.insertHelper(root.right, data)
             return root
             
-
     def insert(self,data):
+
         #if it returns you the new root,then change your class root to this
         self.root=self.insertHelper(self.root, data)
 
@@ -81,19 +85,24 @@ class BST:
         #it keeps going on left,left,...and simly returns end of the left as min
 
     
-    #creating an delete helper function
+    #creating an delete helper function,her data means what we want to delete
     def deleteDataHelper(self,root,data):
-        #will return true,false, and root 
+        #will return true,false, and root ,current root is none ,indicating empty tree or reaching a leaf node with out finding the data,and return false indicating data was not found and retrun a root(i.e orginal)
         if root == None:
             return False,root
-        #if roots data is less than the data,call it on left side
+        #if roots data is less than the data,call it on right side
         if root.data < data:
+            #deleted (wheather data was deleted) and newrightnode (the updated right child after deletion)
+            #this variable holds a boolean(if data found and deleted then True otherwise False  ,if ) value indicating wheather the deletion was successful
+            #newRightNode this variable holds the updated left child of the current root after the deletion operation.it could be none if the node to be deleted was a leaf node ,or it could be a subtree after the deletion
             deleted, newRightNode = self.deleteDataHelper(root.right,data)
             #simply change right child to be the new right node,if didn't change ,keeping the same right child
             #if we delete some thing on right the overall root is not going to change,return wheather you deleted something or not and root stays the same
+
+            #finally updates that newrightnode as rightside root and finally returns deleted(i.e True or False),root value(updated new root value)
             root.right = newRightNode
             return deleted,root
-        
+        #if root data is greater than data ,then call it on left side
         if root.data > data:
             deleted, newLeftNode = self.deleteDataHelper(root.left,data)
             root.left = newLeftNode
@@ -105,10 +114,10 @@ class BST:
         if root.left == None and root.right == None:
             return True,None
             #here return true because am deleting something and roots right becomes new root
-        #root has one child
+        #root has one child roots left case
         if root.left == None:
             return True, root.right
-
+#roots right case
         if root.right == None:
             return True,root.left
         
