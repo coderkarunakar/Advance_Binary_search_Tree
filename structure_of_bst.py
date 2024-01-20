@@ -1,4 +1,4 @@
-
+#Dry run it has doubt on delete data
 #write code without looking and understand it
 #Structure of BST
 #it is used to create node and link them to construct binary tree for various application,it has data the information stored in the node,and pointers to the left and right children forming heirarchiical structure of the binary tree
@@ -104,8 +104,11 @@ class BST:
             return deleted,root
         #if root data is greater than data ,then call it on left side
         if root.data > data:
+            #this line go to the next left root value and compare the data if matches then assign to newleftnode
             deleted, newLeftNode = self.deleteDataHelper(root.left,data)
+            #updating the left child of the current root with the new left node returned from the recursive call
             root.left = newLeftNode
+            #finally return both
             return deleted,root
              
         #special case root data == data
