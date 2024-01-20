@@ -113,7 +113,7 @@ class BST:
              
         #special case root data == data
 
-        #root is leaf
+        #root is leaf(5 comes under this case)
         if root.left == None and root.right == None:
             return True,None
             #here return true because am deleting something and roots right becomes new root
@@ -155,5 +155,5 @@ print(b.printTree())
 print(b.count())
 print(b.deletedata(8))
 print(b.printTree())
-print(b.deletedata(5))
+print("the tree is ",b.deletedata(5))
 print(b.printTree())
