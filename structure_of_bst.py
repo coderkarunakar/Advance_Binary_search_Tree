@@ -71,73 +71,67 @@ class BST:
 
         #if it returns you the new root,then change your class root to this
         self.root=self.insertHelper(self.root, data)
+        self.numofnodes +=1
 
 
     def min(self, root):
+        #if we want to find a min of set we will return a large no of set so 1000,if root is none we return a large no
         if root == None:
-            #if we want to find min of an empty set return a large no
             return 10000
-            #check on left ,if left is none,root has to be min,if left is not none then simply get the min from left and return
+            #if no left value simply return root value since it is the min value
         if root.left == None:
+
             return root.data
-        #otherwise
+                # Otherwise, we recursively search for the minimum in the left subtree.of right side
+
         return self.min(root.left)
-        #it keeps going on left,left,...and simly returns end of the left as min
+        #the above function keep going left,left ,left and so on and it reaches where there are no more left children simply return that nodes data,that how we will be able to find
 
     
-    #creating an delete helper function,her data means what we want to delete
     def deleteDataHelper(self,root,data):
-        #will return true,false, and root ,current root is none ,indicating empty tree or reaching a leaf node with out finding the data,and return false indicating data was not found and retrun a root(i.e orginal)
+#if root is empty simply return false(no root is deleted and root stays to be none)        
         if root == None:
-            return False,root
-        #if roots data is less than the data,call it on right side
+            return False,None
+            #if roots data is less than data so it will on right side so call it
         if root.data < data:
-            #deleted (wheather data was deleted) and newrightnode (the updated right child after deletion)
-            #this variable holds a boolean(if data found and deleted then True otherwise False  ,if ) value indicating wheather the deletion was successful
-            #newRightNode this variable holds the updated left child of the current root after the deletion operation.it could be none if the node to be deleted was a leaf node ,or it could be a subtree after the deletion
+#it is telling that if deleted something or not and returning newrightnode
             deleted, newRightNode = self.deleteDataHelper(root.right,data)
-            #simply change right child to be the new right node,if didn't change ,keeping the same right child
-            #if we delete some thing on right the overall root is not going to change,return wheather you deleted something or not and root stays the same
-
-            #finally updates that newrightnode as rightside root and finally returns deleted(i.e True or False),root value(updated new root value)
+            #changing right child to be the new right node since we deleted root and that should be replaced by something
             root.right = newRightNode
+            #incase didn't changed the root remains same
             return deleted,root
-        #if root data is greater than data ,then call it on left side
+            #similar for left child
         if root.data > data:
-            #this line go to the next left root value and compare the data if matches then assign to newleftnode
             deleted, newLeftNode = self.deleteDataHelper(root.left,data)
-            #updating the left child of the current root with the new left node returned from the recursive call
             root.left = newLeftNode
-            #finally return both
             return deleted,root
              
-        #special case root data == data
-
-        #root is leaf(5 comes under this case)
+#if you are reaching here this case is roots data == data ,again 3cases
+#case1:root has data and no left,right data so return true and nothing to replace as a root so return none
         if root.left == None and root.right == None:
             return True,None
-            #here return true because am deleting something and roots right becomes new root
-        #root has one child roots left case
+       #case2:if roots left == none i.e no left child only right child is there and return true since deleting something and root.right as the new root similar for right side as well    
         if root.left == None:
             return True, root.right
-#roots right case
         if root.right == None:
             return True,root.left
-        
-        #root has 2 children
-        #find roots replacement by finding the min node from roots right side,then change roots data to be replacement
+#root has 2children ,in this case after deleting root we need to replace it with something so finding replacement as the min value of the right side for beter clarifcation look at class Notes
         replacement = self.min(root.right)
+        #once you get replacement value then assign it to root value
         root.data  = replacement
+        #here you replaced right side min value as a root and still right side min value exist so we are deleting that min value from right side,on root right side deleting the replacement,and it is going to return 2things deleted or not and new right side node
         deleted, newRightNode = self.deleteDataHelper(root.right, replacement)
+        #roots right will be new right node,
         root.right = newRightNode
+        #simply return true since deleted somthing and root stays the same,it does not change
         return True,root
-            
+            #in the above case we didnot removed the data ,we have replaced the nodes data,
+            #node is same ,nodes data has been changed ,just copied the content here so root stays same ,and deleted that replacement value in the right side
 
 
 
     def deletedata(self,data):
         deleted, newRoot = self.deleteDataHelper(self.root,data)
-        #if actually it deleted something then we will reduce the no of nodes,and then next root is the new root and return the deleted,to tell wheather actually we deleted something or not
         if deleted:
             self.numofnodes -= 1
         self.root = newRoot
@@ -146,14 +140,15 @@ class BST:
         return self.numofnodes
 
 b =BST()
-print(b.insert(10)) #->the 1st one will be root
-print(b.insert(5))  #->2nd one will be roots left
-print(b.insert(12))  # ->3rd one will be roots right
-print(b.insert(11))
-print(b.insert(15))
-print(b.printTree())
+(b.insert(10)) #->the 1st one will be root
+(b.insert(5))  #->2nd one will be roots left
+(b.insert(7))  # ->3rd one will be roots right
+(b.insert(6))
+(b.insert(8))
+(b.insert(12))
+(b.insert(11))
+(b.insert(15))
+(b.printTree())
 print(b.count())
-print(b.deletedata(8))
-print(b.printTree())
-print("the tree is ",b.deletedata(5))
-print(b.printTree())
+b.deletedata(10)
+b.printTree()
