@@ -82,19 +82,19 @@ class BST:
         if root.left == None:
 
             return root.data
-                # Otherwise, we recursively search for the minimum in the left subtree.of right side
+                # Otherwise, we recursively search for the minimum in the left subtree.of right side   
 
         return self.min(root.left)
         #the above function keep going left,left ,left and so on and it reaches where there are no more left children simply return that nodes data,that how we will be able to find
 
     
-    def deleteDataHelper(self,root,data):
+    def  deleteDataHelper(self,root,data):
 #if root is empty simply return false(no root is deleted and root stays to be none)        
         if root == None:
             return False,None
             #if roots data is less than data so it will on right side so call it
         if root.data < data:
-#it is telling that if deleted something or not and returning newrightnode
+#it is telling that if deleted something or not and returning newrightnode,this line checks the match with the root.right and data value i.e compares mathching or not if mathces goes to next line or agai back
             deleted, newRightNode = self.deleteDataHelper(root.right,data)
             #changing right child to be the new right node since we deleted root and that should be replaced by something
             root.right = newRightNode
@@ -133,9 +133,13 @@ class BST:
     def deletedata(self,data):
         deleted, newRoot = self.deleteDataHelper(self.root,data)
         if deleted:
+            #if deleted any tehn the no of nodes value is getting decreased
             self.numofnodes -= 1
+#the updated new root is getting assigned to the actual root postion
         self.root = newRoot
+        #finally a true or false if deleted then it is true
         return deleted
+        #simply it gives count by no of nodes
     def count(self):
         return self.numofnodes
 
@@ -150,5 +154,6 @@ b =BST()
 (b.insert(15))
 (b.printTree())
 print(b.count())
-b.deletedata(10)
+b.deletedata(8)
 b.printTree()
+
